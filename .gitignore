@@ -10,4 +10,7 @@
 # aplinkos kintamieji su slaptais raktais (niekada necommit'inami); .env.example - commit'inamas
 .env
 .env.*
+*.env
+*.env.*
 !.env.example
+!*.env.example
