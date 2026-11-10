@@ -7,3 +7,7 @@
 .claude/settings.local.json
 # Codex MCP konfigūracija - gali turėti realius raktus
 .codex/config.toml
+# aplinkos kintamieji su slaptais raktais (niekada necommit'inami); .env.example - commit'inamas
+.env
+.env.*
+!.env.example
