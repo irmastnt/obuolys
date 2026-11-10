@@ -1,0 +1,114 @@
+{
+  "permissions": {
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(rm -fr *)",
+      "Bash(rm -r *)",
+      "Bash(rm -R *)",
+      "Bash(rm -Rf *)",
+      "Bash(rm -fR *)",
+      "Bash(rm -f -r *)",
+      "Bash(rm -r -f *)",
+      "Bash(rm --recursive *)",
+      "Bash(sudo *)",
+      "Bash(curl * | bash)",
+      "Bash(curl * | sh)",
+      "Bash(curl *|bash)",
+      "Bash(curl *|sh)",
+      "Bash(wget * | bash)",
+      "Bash(wget * | sh)",
+      "Bash(wget *|bash)",
+      "Bash(wget *|sh)",
+      "Bash(git push --force*)",
+      "Bash(git push -f*)",
+      "Bash(git reset --hard*)",
+      "Bash(git clean -f *)",
+      "Bash(git clean -fd*)",
+      "Bash(git clean -df*)",
+      "Bash(git clean -fx*)",
+      "Bash(git clean -xf*)",
+      "Bash(git clean -xdf*)",
+      "Bash(git clean -xfd*)",
+      "Bash(git clean -dxf*)",
+      "Bash(git clean -dfx*)",
+      "Bash(git clean -ffd*)",
+      "Bash(git branch -D *)",
+      "Bash(npx supabase db reset*)",
+      "Bash(npx supabase db push --db-url*)",
+      "Bash(psql *)",
+      "Bash(npx vercel --prod*)",
+      "Bash(npx vercel deploy --prod*)",
+      "Bash(vercel --prod*)",
+      "Bash(vercel deploy --prod*)",
+      "Bash(vercel rm*)",
+      "Bash(vercel remove*)",
+      "Bash(npx vercel rm*)",
+      "Bash(npx vercel remove*)",
+      "Edit(.env)",
+      "Edit(.env.*)",
+      "Edit(**/.env)",
+      "Edit(**/.env.*)",
+      "Edit(package-lock.json)",
+      "Edit(pnpm-lock.yaml)",
+      "Edit(bun.lockb)",
+      "Read(.env)",
+      "Read(.env.*)",
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(**/.env)",
+      "Read(**/.env.*)"
+    ],
+    "ask": [
+      "Bash(git commit*)",
+      "Bash(git push*)",
+      "Bash(gh pr create*)",
+      "Bash(gh pr merge*)",
+      "Bash(npm publish*)",
+      "Bash(vercel env pull*)",
+      "Bash(npx vercel env pull*)",
+      "Bash(vercel env rm*)",
+      "Bash(npx vercel env rm*)",
+      "Edit(package.json)",
+      "Edit(.mcp.json)",
+      "Edit(.github/workflows/**)",
+      "Edit(.po-config.json)"
+    ]
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PO_RUNTIME=claude \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/session-context.sh"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PO_RUNTIME=claude \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/wiki-drift-stop.sh"
+          },
+          {
+            "type": "command",
+            "command": "PO_RUNTIME=claude \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/docs-drift-stop.sh"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "PO_RUNTIME=claude \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/commit-gate.sh"
+          }
+        ]
+      }
+    ]
+  }
+}

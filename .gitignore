@@ -1,0 +1,9 @@
+# ponas-obuolys drift hook throttle markeriai (per-HEAD, ne versionuojami)
+.claude/.wiki-drift-last-prompted
+.claude/.docs-drift-last-prompted
+# konteksto biudžeto sargo būsena (per-sesiją, ne versionuojama)
+.claude/.po-context-notified
+# asmeniniai/lokalūs nustatymai (per-vartotojas, ne versionuojami)
+.claude/settings.local.json
+# Codex MCP konfigūracija - gali turėti realius raktus
+.codex/config.toml

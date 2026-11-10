@@ -1,0 +1,70 @@
+{
+  "version": "3.5.0",
+  "installed_at": "2026-11-10T00:00:00Z",
+  "project": {
+    "language": "unknown",
+    "framework": "none",
+    "database": "none",
+    "payments": "none",
+    "hosting": "unknown",
+    "test_framework": "none"
+  },
+  "config": {
+    "coverage_threshold": 80,
+    "max_file_lines": 400,
+    "max_function_lines": 50,
+    "max_component_lines": 250,
+    "build_cmd": "",
+    "lint_cmd": "",
+    "test_cmd": "",
+    "format_cmd": "",
+    "typecheck_cmd": "",
+    "types_regen_cmd": "",
+    "dev_cmd": "",
+    "dev_url": "",
+    "ui_language": "lt"
+  },
+  "deploy": {
+    "production_url": "",
+    "branch": "main",
+    "smoke_paths": ["/"]
+  },
+  "guard_gate": {
+    "mode": "combined",
+    "provider": "auto",
+    "claude_model": "sonnet",
+    "codex_model": "",
+    "timeout_seconds": 0
+  },
+  "enabled_guards": [
+    "risk-assessor",
+    "language-guard",
+    "file-size-guard",
+    "security-guard",
+    "test-coverage-guard",
+    "db-migration-guard"
+  ],
+  "guard_triggers": {
+    "db-migration-guard": "migrations/|\\.sql$|db/changelog/",
+    "language-guard": "\\.(tsx|ts|jsx|js|vue|svelte|md)$",
+    "file-size-guard": "\\.(sh|ts|tsx|js|jsx|mjs|cjs|py|rs|go|rb|java|kt|kts|swift|php|c|cc|cpp|h|hpp|cs|yml|yaml|tf)$",
+    "test-coverage-guard": "^(src|app|lib|server|api|cmd|internal|pkg|Sources)/.*\\.(ts|tsx|js|jsx|py|go|rs|java|kt|swift|php|cs|rb)$",
+    "security-guard": "\\.env|auth|security|middleware|(^|/)api/",
+    "payment-guard": "payment|checkout|billing|refund|webhook",
+    "dependency-guardian": "package\\.json|requirements\\.txt|pyproject\\.toml|go\\.mod|Cargo\\.toml|composer\\.(json|lock)|Gemfile(\\.lock)?|pom\\.xml|build\\.gradle(\\.kts)?|\\.csproj|Package\\.(swift|resolved)",
+    "email-guard": "email|mail|resend|notification"
+  },
+  "wiki_gate": {
+    "block_commit_on_drift": true,
+    "drift_block_threshold": 3
+  },
+  "docs_gate": {
+    "block_commit_on_drift": true,
+    "drift_block_threshold": 3
+  },
+  "context_gate": {
+    "enabled": true,
+    "window_tokens": "auto",
+    "warn_thresholds": [40, 60]
+  }
+}
