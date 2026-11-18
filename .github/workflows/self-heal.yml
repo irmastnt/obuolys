@@ -51,7 +51,7 @@ jobs:
         run: npm install -g @anthropic-ai/claude-code
 
       - name: Download failing workflow logs
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           run-id: ${{ github.event.workflow_run.id }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
