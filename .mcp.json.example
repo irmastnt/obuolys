@@ -1,0 +1,40 @@
+{
+  "_comment": "Šis failas — referencinis šablonas. Rekomenduojama: paleisti `bash scripts/setup.sh`, kuris interaktyviai paklaus, kuriuos MCP įtraukti, surinks raktus ir sugeneruos .mcp.json (chmod 600, .gitignore'e). Rankinis būdas: nukopijuokite į .mcp.json, įrašykite raktus tiesiogiai arba palikite ${VAR} ir eksportuokite env var'us prieš `claude`.",
+  "mcpServers": {
+    "supabase": {
+      "command": "npx",
+      "args": ["-y", "@supabase/mcp-server-supabase@latest"],
+      "env": {
+        "SUPABASE_ACCESS_TOKEN": "${SUPABASE_ACCESS_TOKEN}",
+        "SUPABASE_PROJECT_REF": "${SUPABASE_PROJECT_REF}"
+      }
+    },
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@latest"]
+    },
+    "stripe": {
+      "command": "npx",
+      "args": ["-y", "@stripe/mcp@latest", "--tools=all"],
+      "env": {
+        "STRIPE_SECRET_KEY": "${STRIPE_SECRET_KEY}"
+      }
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"]
+    },
+    "vercel": {
+      "type": "http",
+      "url": "https://mcp.vercel.com"
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["-y", "chrome-devtools-mcp@latest"]
+    },
+    "mempalace": {
+      "command": "mempalace",
+      "args": ["mcp"]
+    }
+  }
+}

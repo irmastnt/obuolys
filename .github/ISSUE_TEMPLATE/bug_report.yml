@@ -1,0 +1,79 @@
+name: Bug report
+description: Praneškite apie neveikiantį arba neteisingai veikiantį funkcionalumą
+title: "fix: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Ačiū už bug report. Kuo tiksliau užpildykite laukus, kad problemą būtų galima greitai atkurti.
+  - type: textarea
+    id: summary
+    attributes:
+      label: Problemos santrauka
+      description: Kas neveikia?
+      placeholder: Trumpai aprašykite problemą.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reprodukcijos žingsniai
+      description: Kokiais žingsniais galima atkurti problemą?
+      placeholder: |
+        1. Atidaryti ...
+        2. Paspausti ...
+        3. Matyti klaidą ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Tikėtinas rezultatas
+      description: Kas turėjo įvykti?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Faktinis rezultatas
+      description: Kas įvyko vietoje to?
+    validations:
+      required: true
+  - type: dropdown
+    id: area
+    attributes:
+      label: Sritis
+      options:
+        - UI
+        - Auth
+        - App core
+        - Supabase / DB / RLS
+        - Stripe / Billing
+        - CI/CD
+        - Dokumentacija
+        - AI tooling / starteris
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Aplinka
+      description: Naršyklė, OS, Node versija, branch, deploy URL ar kita svarbi informacija.
+      placeholder: macOS, Chrome, Node 20, branch feature/...
+  - type: textarea
+    id: logs
+    attributes:
+      label: Log’ai arba screenshot’ai
+      description: Įkelkite klaidos pranešimus, screenshot’us ar video, jei turite.
+      render: shell
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Patikrinimai
+      options:
+        - label: Patikrinau, kad tai nėra saugumo pažeidžiamumas. Saugumo problemas raportuosiu pagal SECURITY.md.
+          required: true
+        - label: Paieškojau, ar toks issue dar neegzistuoja.
+          required: true

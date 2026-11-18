@@ -1,56 +1,39 @@
 ---
 type: index
-created: 2026-11-10
-updated: 2026-11-10
+created: 2026-04-25
+updated: 2026-04-25
 ---
 
 # Wiki · Puslapių katalogas
 
-Šis failas yra wiki turinio lentelė. Claude Code atnaujina ją, kai sukuria naujus entity arba concept puslapius, arba ingestuoja naujus šaltinius.
+Šis failas yra jūsų wiki turinio lentelė. Memoriki / Claude Code pats ją atnaujina, kai ingestuoja naujus šaltinius iš `raw/`.
 
-**Pildoma per `/po-wiki-update` komandą.** Stop hook'as (`wiki-drift-stop.sh`) aptinka drift'ą tarp commit'ų ir `wiki/log.md`. Jis reikalauja paleisti `/po-wiki-update`, kol drift'as neištaisytas.
+**Neredaguokite rankiniu būdu** — viskas atnaujinama per `mempalace mine .` arba Claude Code užklausą "atnaujink wiki".
 
-## Frontmatter konvencija
+## Entities (žmonės, kompanijos)
 
-Kiekvienas wiki puslapis turi privalomą frontmatter bloką:
-
-```markdown
----
-type: concept | entity | source | synthesis
-created: 2026-11-10
-updated: 2026-11-10
-sources:
-  - <git ref / file paths / PRD nuoroda>
----
-```
-
-- Failo vardai: kebab-case (pvz. `auth-flow.md`).
-- Cross-link'ai: `[[wiki/entities/<name>]]` arba `[[wiki/concepts/<name>]]`.
-- Turinys projekto UI kalba (numatyta: Lietuvių). Kodo identifikatoriai, komandos ir API parametrai lieka EN, backtick'uose.
-
-## Entities (žmonės, kompanijos, sistemos)
-
-- [[wiki/entities/obuolys]] - pats projektas: paskirtis, stack, workflow
+_(Kol nėra įkelta jokių šaltinių)_
 
 ## Concepts (idėjos, framework'ai, terminai)
 
-_(Tuščia. Pildoma per `/po-wiki-update`, kai atsiranda pirmas concept puslapis.)_
+_(Kol nėra įkelta jokių šaltinių)_
 
 ## Sources (išoriniai šaltiniai)
 
-_(Tuščia. Pildoma per `/po-wiki-update`, kai ingestuojamas pirmas šaltinis.)_
+_(Kol nėra įkelta jokių šaltinių)_
 
 ## Synthesis (kryžminė analizė)
 
-_(Pridedama, kai entity/concept tinklas tampa pakankamai tankus kryžminei analizei.)_
+_(Kol nėra įkelta jokių šaltinių)_
 
 ---
 
 ## Kaip tai veikia
 
-1. Claude Code perskaito pakeitimus (commit'us, PRD/tasks failus) ir atskiria entities plius concepts.
-2. Sukuria arba atnaujina puslapius `wiki/entities/<name>.md`, `wiki/concepts/<name>.md`, `wiki/sources/<name>.md`.
-3. Atnaujina šį indeksą su nauju cross-link'u kiekvienam puslapiui.
-4. Įrašo operaciją į `wiki/log.md`.
+1. Įmesite failą į `raw/` (pvz., `raw/stripe-api-notes.md`).
+2. Claude Code perskaito failą, išskaido į entities + concepts.
+3. Sukuria puslapius `wiki/entities/<name>.md` ir `wiki/concepts/<name>.md`.
+4. Atnaujina šį indeksą.
+5. Įrašo operaciją į `wiki/log.md`.
 
-**Užklausos metu** Claude Code ieško per šį indeksą, atranda relevant puslapius ir sintetizuoja atsakymą su cross-link'ais (`[[wiki/...]]` formatu).
+**Užklausos metu** — Claude Code ieško per šį indeksą, atranda relevant puslapius, ir sintezuoja atsakymą su cross-links.

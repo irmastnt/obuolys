@@ -1,0 +1,76 @@
+name: Feature request
+description: Pasiūlykite naują funkciją arba UX pagerinimą
+title: "feat: "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Funkcijos pasiūlymui svarbiausia aiški problema, naudotojo poreikis ir sėkmės kriterijus.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problema
+      description: Kokią naudotojo arba verslo problemą sprendžiame?
+      placeholder: Kaip naudotojas, noriu ..., kad ...
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Siūlomas sprendimas
+      description: Koks minimalus sprendimas būtų pakankamas?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatyvos
+      description: Kokias alternatyvas svarstėte?
+  - type: dropdown
+    id: area
+    attributes:
+      label: Sritis
+      options:
+        - UI
+        - Auth
+        - App core
+        - Importas / eksportas
+        - Supabase / DB / RLS
+        - Stripe / Billing
+        - CI/CD
+        - Dokumentacija
+        - AI tooling / starteris
+    validations:
+      required: true
+  - type: textarea
+    id: success
+    attributes:
+      label: Sėkmės kriterijai
+      description: Kaip žinosime, kad funkcija veikia?
+      placeholder: |
+        - Vartotojas gali ...
+        - Testas patikrina ...
+        - Performance / saugumo kriterijus ...
+    validations:
+      required: true
+  - type: dropdown
+    id: risk
+    attributes:
+      label: Rizika
+      options:
+        - Low
+        - Medium
+        - High
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Patikrinimai
+      options:
+        - label: Paieškojau, ar toks pasiūlymas dar neegzistuoja.
+          required: true
+        - label: Suprantu, kad didesni pakeitimai turi turėti PRD arba task dokumentą.
+          required: true

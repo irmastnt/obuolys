@@ -45,6 +45,7 @@ Coverage slenkstis imamas iš `.po-config.json` (`coverage_threshold`). Kai šį
 4. **Komponentai be business logic** (tik UI išdėstymas) - OK be testų.
 5. **Custom hook'ai** - WARN, jei nėra testų (rekomendacija, ne blokas), nebent juose yra business logika (žr. taisyklė 2).
 6. **Jei testai TRINAMI be paaiškinimo** - BLOCKED ("kodėl šį testą šalinate?").
+7. **Šio projekto specifika (Next.js + Vitest + Playwright):** naujas API route (`app/api/**/route.ts`) ar Server Action - BLOCKED, jei nėra `*.test.ts` po `tests/`. E2E testai - `tests/e2e/` (Playwright).
 
 ## Workflow
 

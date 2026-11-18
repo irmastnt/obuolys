@@ -1,0 +1,8 @@
+# raw/ — Memoriki šaltinių drop zone
+#
+# Čia metate bet kokius dokumentus (PDF konvertuotus į MD, Markdown
+# straipsnius, meeting notes, paper'iais). Memoriki / Claude Code
+# juos apdoroja ir sukuria wiki/ struktūrą.
+#
+# Palaikomi formatai: .md, .txt
+# (PDF konvertuokite iš anksto per `pandoc` arba panašų įrankį)

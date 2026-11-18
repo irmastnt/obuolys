@@ -1,0 +1,10 @@
+{
+  "enabledMcpjsonServers": [
+    "supabase",
+    "context7",
+    "stripe",
+    "playwright",
+    "vercel",
+    "chrome-devtools"
+  ]
+}

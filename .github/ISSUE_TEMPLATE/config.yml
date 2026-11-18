@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Saugumo pažeidžiamumas
+    url: https://github.com/ponasObuolys/advanced-vibe-coding-starter/security/advisories/new
+    about: Neraportuokite saugumo problemų viešuose issue. Naudokite privatų GitHub Security Advisory.
+  - name: Bendri klausimai
+    url: https://github.com/ponasObuolys/advanced-vibe-coding-starter/discussions
+    about: Klausimams ir diskusijoms naudokite GitHub Discussions, jei jos įjungtos.
+  - name: Ponas Obuolys
+    url: https://ponasobuolys.lt
+    about: Projekto autoriaus svetainė ir kontaktai.

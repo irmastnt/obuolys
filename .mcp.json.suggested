@@ -1,0 +1,19 @@
+{
+  "_comment": "Šis failas — referencinis šablonas. Rekomenduojama: paleisti `bash scripts/setup.sh`, kuris interaktyviai paklaus, kuriuos MCP įtraukti, surinks raktus ir sugeneruos .mcp.json (chmod 600, .gitignore'e). Rankinis būdas: nukopijuokite į .mcp.json, įrašykite raktus tiesiogiai arba palikite ${VAR} ir eksportuokite env var'us prieš `claude`.",
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp@latest"
+      ]
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "chrome-devtools-mcp@latest"
+      ]
+    }
+  }
+}

@@ -1,0 +1,152 @@
+# .github/workflows/self-heal.yml
+# Self-Healing Code — kai CI fail'ina, Claude Code analizuoja ir siūlo fix.
+#
+# Trigger: workflow_run po "CI" workflow'o conclusion == failure.
+# Veikia tik feature šakose (ne main), tik jei fail yra known-healable tipų.
+#
+# ⚠️ SAUGUMO ĮSPĖJIMAS - perskaityk prieš įjungdamas:
+#   - Nepatikimi CI log'ai (gali turėti bet kieno įrašytą tekstą: testų išvestį, PR turinį)
+#     dedami į Claude prompt'ą -> prompt injection rizika.
+#   - Claude paleidžiamas su --dangerously-skip-permissions (be jokių leidimų patikros),
+#     o workflow turi contents/pull-requests/issues: write -> apgautas AI gali rašyti į repo.
+#   - Rekomendacija: laikyk išjungtą, kol nėra būtinybės; jei įjungi - leisk tik read
+#     teises, ribok Claude įrankius (--allowedTools) ir fix'us siūlyk tik per PR peržiūrai.
+
+name: self-heal
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+  actions: read
+
+jobs:
+  heal:
+    if: ${{ github.event.workflow_run.conclusion == 'failure' && github.event.workflow_run.head_branch != 'main' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout failing commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Install Claude Code CLI
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Download failing workflow logs
+        uses: actions/download-artifact@v4
+        with:
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: .self-heal/logs/
+        continue-on-error: true
+
+      - name: Classify failure
+        id: classify
+        run: |
+          # Tik 4 žinomi "healable" tipai — visa kita → neliečiam
+          HEALABLE="no"
+          LOGS=$(find .self-heal/logs -name "*.txt" -exec cat {} + 2>/dev/null || echo "")
+
+          if echo "$LOGS" | grep -qiE "data-testid.*not found|locator.*waiting for"; then
+            echo "type=playwright-selector" >> $GITHUB_OUTPUT
+            HEALABLE="yes"
+          elif echo "$LOGS" | grep -qiE "snapshot.*out of date|toMatchSnapshot"; then
+            echo "type=snapshot-drift" >> $GITHUB_OUTPUT
+            HEALABLE="yes"
+          elif echo "$LOGS" | grep -qiE "TypeError: Cannot read|Property .* does not exist"; then
+            echo "type=typescript-type" >> $GITHUB_OUTPUT
+            HEALABLE="yes"
+          elif echo "$LOGS" | grep -qiE "ESLint.*error|Parsing error"; then
+            echo "type=lint" >> $GITHUB_OUTPUT
+            HEALABLE="yes"
+          fi
+
+          echo "healable=$HEALABLE" >> $GITHUB_OUTPUT
+
+      - name: Run Claude Code fix
+        if: steps.classify.outputs.healable == 'yes'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          cat > .self-heal/prompt.md <<EOF
+          CI fail'ino feature šakoje. Klaidos tipas: ${{ steps.classify.outputs.type }}.
+
+          FAIL LOGS:
+          \`\`\`
+          $(find .self-heal/logs -name "*.txt" -exec cat {} + 2>/dev/null | tail -200)
+          \`\`\`
+
+          UŽDUOTIS:
+          1. Perskaityk projekto CLAUDE.md (ypač Karpathy principus).
+          2. Perskaityk paveiktus failus.
+          3. Padaryk MINIMALŲ fix'ą (principas #3 — surgical changes).
+          4. Paleisk \`npm run build\` ir \`npm run lint\` — patvirtink, kad praeina.
+          5. Sukurk commit'ą su žinute "fix(self-heal): <problema>".
+
+          JEI NEPAVYKSTA saugiai fix'inti — exit 1 (ne commit'ink nieko).
+          EOF
+
+          claude --print --dangerously-skip-permissions < .self-heal/prompt.md
+
+      - name: Verify fix passes locally
+        if: steps.classify.outputs.healable == 'yes'
+        run: |
+          npm run lint
+          npm run build
+          npm run test -- --run
+
+      - name: Run guard agents on the fix
+        if: steps.classify.outputs.healable == 'yes'
+        run: |
+          git add -A
+          bash .claude/hooks/pre-commit.sh
+
+      - name: Push self-heal branch + open PR
+        if: steps.classify.outputs.healable == 'yes' && success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Untrusted values go through env vars, never ${{ }} inside run: (script injection).
+          HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+          FAIL_TYPE: ${{ steps.classify.outputs.type }}
+        run: |
+          BRANCH="self-heal/${HEAD_BRANCH}-${RUN_ID}"
+          git config user.email "self-heal@users.noreply.github.com"
+          git config user.name "Self-Heal Bot"
+          git checkout -b "$BRANCH"
+          git push origin "$BRANCH"
+
+          gh pr create \
+            --title "🤖 Self-Heal: ${FAIL_TYPE} fix" \
+            --body "Automatiškai sugeneruotas fix'as po CI fail ant ${HEAD_BRANCH}.
+
+            **Klaidos tipas:** ${FAIL_TYPE}
+            **Original commit:** ${HEAD_SHA}
+
+            ⚠️ **Review privalomas** — AI-generated fix. Patikrinkite diff'ą prieš merge."
+
+      - name: Comment on original branch if not healable
+        if: steps.classify.outputs.healable == 'no'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "CI fail'as neatitinka žinomų self-heal pattern'ų. Reikalingas rankinis fix'as."

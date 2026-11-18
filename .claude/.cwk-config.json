@@ -1,0 +1,34 @@
+{
+  "version": "3.0.1",
+  "installed_at": "2026-11-17T21:54:42Z",
+  "starter_identity": {
+    "memPalace": true,
+    "memoriki": true,
+    "karpathy_principles": 4,
+    "lt_guards": [
+      "payment-guard",
+      "db-migration-guard",
+      "language-guard",
+      "file-size-guard",
+      "risk-assessor",
+      "security-guard",
+      "test-coverage-guard"
+    ]
+  },
+  "project": {
+    "language": "typescript",
+    "framework": "nextjs",
+    "database": "",
+    "payments": "",
+    "hosting": "",
+    "test_framework": "vitest"
+  },
+  "config": {
+    "coverage_threshold": 80,
+    "max_file_lines": 300,
+    "build_cmd": "npm run build",
+    "lint_cmd": "npm run lint",
+    "test_cmd": "npx vitest run",
+    "ui_language": "lt"
+  }
+}

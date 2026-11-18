@@ -1,16 +1,91 @@
-# ponas-obuolys drift hook throttle markeriai (per-HEAD, ne versionuojami)
-.claude/.wiki-drift-last-prompted
-.claude/.docs-drift-last-prompted
-# konteksto biudžeto sargo būsena (per-sesiją, ne versionuojama)
-.claude/.po-context-notified
-# asmeniniai/lokalūs nustatymai (per-vartotojas, ne versionuojami)
-.claude/settings.local.json
-# Codex MCP konfigūracija - gali turėti realius raktus
-.codex/config.toml
-# aplinkos kintamieji su slaptais raktais (niekada necommit'inami); .env.example - commit'inamas
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+dist/
+
+# misc
+.DS_Store
+*.pem
+*.key
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+*.log
+
+# env files (can opt-in for committing if needed) — KRITIŠKA
 .env
 .env.*
-*.env
-*.env.*
 !.env.example
-!*.env.example
+.mcp.json
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# Python (MemPalace)
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.venv/
+venv/
+*.egg-info/
+
+# MemPalace runtime data
+.mempalace/
+.chroma/
+*.sqlite
+*.sqlite-journal
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+Thumbs.db
+
+# Playwright
+playwright-report/
+test-results/
+.playwright/
+
+# Self-heal runtime
+.self-heal/
+
+# Playwright MCP session logs
+.playwright-mcp/
+
+# Claude Code local state
+.claude/projects/
+.claude/history/
+.claude/cache/
+
+# MemPalace per-project files (issue #185)
+mempalace.yaml
+entities.json

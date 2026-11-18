@@ -1,0 +1,9 @@
+.next/
+out/
+build/
+node_modules/
+coverage/
+*.lock
+package-lock.json
+components/ui/
+public/
