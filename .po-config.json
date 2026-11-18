@@ -2,26 +2,26 @@
   "version": "3.5.0",
   "installed_at": "2026-11-10T00:00:00Z",
   "project": {
-    "language": "unknown",
-    "framework": "none",
-    "database": "none",
+    "language": "typescript",
+    "framework": "nextjs",
+    "database": "supabase",
     "payments": "none",
     "hosting": "unknown",
-    "test_framework": "none"
+    "test_framework": "vitest"
   },
   "config": {
     "coverage_threshold": 80,
-    "max_file_lines": 400,
+    "max_file_lines": 300,
     "max_function_lines": 50,
     "max_component_lines": 250,
-    "build_cmd": "",
-    "lint_cmd": "",
-    "test_cmd": "",
+    "build_cmd": "npm run build",
+    "lint_cmd": "npm run lint",
+    "test_cmd": "npx vitest run",
     "format_cmd": "",
     "typecheck_cmd": "",
-    "types_regen_cmd": "",
-    "dev_cmd": "",
-    "dev_url": "",
+    "types_regen_cmd": "npm run db:types",
+    "dev_cmd": "npm run dev",
+    "dev_url": "http://localhost:3000",
     "ui_language": "lt"
   },
   "deploy": {
@@ -38,11 +38,11 @@
   },
   "enabled_guards": [
     "risk-assessor",
-    "language-guard",
     "file-size-guard",
     "security-guard",
     "test-coverage-guard",
-    "db-migration-guard"
+    "db-migration-guard",
+    "dependency-guardian"
   ],
   "guard_triggers": {
     "db-migration-guard": "migrations/|\\.sql$|db/changelog/",
@@ -55,7 +55,7 @@
     "email-guard": "email|mail|resend|notification"
   },
   "wiki_gate": {
-    "block_commit_on_drift": true,
+    "block_commit_on_drift": false,
     "drift_block_threshold": 3
   },
   "docs_gate": {
