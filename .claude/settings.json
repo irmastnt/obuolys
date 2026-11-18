@@ -19,7 +19,6 @@
       "Bash(git log)",
       "Bash(git log *)",
       "Bash(git add *)",
-      "Bash(git commit -m *)",
       "Bash(git push)",
       "Bash(git pull)",
       "Bash(git checkout *)",
@@ -119,6 +118,7 @@
       "WebFetch(domain:*)"
     ],
     "ask": [
+      "Bash(git commit*)",
       "Bash(git push*)",
       "Bash(gh pr create*)",
       "Bash(gh pr merge*)",
